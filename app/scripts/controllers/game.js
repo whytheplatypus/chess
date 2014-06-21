@@ -3,6 +3,7 @@
 angular.module('chessApp')
   .controller('GameCtrl', ["$scope", "$routeParams", function ($scope, $routeParams) {
     console.log($routeParams);
+    var channel = false;
     var id = $routeParams.joining=="true"?$routeParams.id+"_opponent":$routeParams.id
     var protocol = {
           to: 'to',
@@ -34,6 +35,7 @@ angular.module('chessApp')
     me.on('peer', function(eventName, peerManager){
       peerManager.pc.ondatachannel = function(e){
         console.log("new data channel");
+        channel = e.channel;
         e.channel.onmessage = function(message){
           var move = JSON.parse(message.data);
           console.log(move);
@@ -48,6 +50,7 @@ angular.module('chessApp')
         console.log("host:", $routeParams.id);
         var manager = me.connect("763npbkrv")
         var dc = manager.createDataChannel(manager.peer, {reliable : true, protocol: "draw"});
+        channel = dc;
         dc.onopen = function(){
           // me.addDC(dc, peer);
           console.log(dc);
@@ -80,7 +83,11 @@ angular.module('chessApp')
   		var moves = $scope.chess.moves({square: square, verbose: true});
   		$scope.moves = _.pluck(moves, 'to');
   		if($scope.square !== undefined){
-  			console.log($scope.chess.move({ from: $scope.square, to: square }));
+        var move_json = { from: $scope.square, to: square };
+        var move = $scope.chess.move(move_json);
+        console.log(move);
+        channel.send(move_json);
+
   		}
 
   		$scope.square = square;
