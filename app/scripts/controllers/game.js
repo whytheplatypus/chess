@@ -1,7 +1,59 @@
 'use strict';
 
 angular.module('chessApp')
-  .controller('GameCtrl', function ($scope) {
+  .controller('GameCtrl', ["$scope", "$routeParams", function ($scope, $routeParams) {
+    console.log($routeParams);
+    var id = $routeParams.joining=="true"?$routeParams.id+"_opponent":$routeParams.id
+    var protocol = {
+          to: 'to',
+          from: 'from',
+          type: 'type',
+          payload: 'payload',
+          ignore: '',
+          offer: 'OFFER',
+          answer: 'ANSWER',
+          candidate: 'CANDIDATE',
+          port: 'PORT'
+      };
+    var host = 'relay.whytheplatypus.technology'
+          ,port = 80;
+    var me = new Exchange(id);
+    var peerjsServer = 'ws://' + host + ':' + port + '/?id='+me.id;
+    console.log(peerjsServer);
+    me.on('peers', function(eventname, peers){
+      console.log("peers", peers);
+      // for(var i = 0; i < peers.length; i++){
+      //   var manager = me.connect(peers[i])
+      //   var dc = manager.createDataChannel(manager.peer, {reliable : true, protocol: "draw"});
+      //   dc.onopen = function(){
+      //     // me.addDC(dc, peer);
+      //     console.log(dc);
+      //   }
+      // }
+    });
+    me.on('peer', function(eventName, peerManager){
+      peerManager.pc.ondatachannel = function(e){
+        console.log("new data channel");
+      }
+      alert("connection from outside");
+      console.log("connected from outside", arguments);
+    });
+    me.initWS(peerjsServer, protocol);
+    setTimeout(function(){
+      if($routeParams.joining == "true"){
+        console.log("host:", $routeParams.id);
+        var manager = me.connect("763npbkrv")
+        var dc = manager.createDataChannel(manager.peer, {reliable : true, protocol: "draw"});
+        dc.onopen = function(){
+          // me.addDC(dc, peer);
+          console.log(dc);
+        }
+      }
+    }, 1000)
+
+
+    $scope.connections = [];
+
   	$scope._ = _;
   	$scope.board = {
   		a: [8,7,6,5,4,3,2,1],
@@ -25,4 +77,4 @@ angular.module('chessApp')
 
   		$scope.square = square;
   	}
-  });
+  }]);
