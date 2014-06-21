@@ -4,6 +4,7 @@ angular.module('chessApp')
   .controller('GameCtrl', ["$scope", "$routeParams", function ($scope, $routeParams) {
     console.log($routeParams);
     var channel = false;
+    $scope.color = $routeParams.joining=="true"?"b":"w";
     var id = $routeParams.joining=="true"?$routeParams.id+"_opponent":$routeParams.id
     var protocol = {
           to: 'to',
@@ -96,7 +97,7 @@ angular.module('chessApp')
   		console.log(square);
   		var moves = $scope.chess.moves({square: square, verbose: true});
   		$scope.moves = _.pluck(moves, 'to');
-  		if($scope.square !== undefined){
+  		if($scope.square !== undefined && $scope.chess.turn() == $scope.color && channel){
         var move_json = { from: $scope.square, to: square };
         var move = $scope.chess.move(move_json);
         console.log(move);
