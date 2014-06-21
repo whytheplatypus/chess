@@ -1,0 +1,51 @@
+/*#game_room{
+    display:none;
+}*/
+
+body {
+
+}
+
+.game{
+    float:left;
+}
+
+x-user-list{
+    height:100%;
+    overflow:scroll;
+}
+
+.column {
+	width:50px;
+}
+
+.square {
+	height:50px;
+	/*width:20px;*/
+	font-size:32px;
+}
+
+.dark {
+   background-color: #999;
+}
+
+.light {
+   background-color: #eee;
+}
+
+.valid{
+	border-color: rgba(0,0,255,0.5);
+  border-style: solid;
+}
+/**/
+.b {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+/*#chessboard.b{
+  -webkit-transform-origin: 200px 200px;
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+
+}*/
