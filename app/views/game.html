@@ -10,4 +10,5 @@
   {{moves}}
   <span class='piece' ng-bind-html="chess.symbols[chess.turn()]['k']"></span>
 </div>
-<video></video>
+<video muted ng-src="{{local_stream}}" autoplay></video>
+<video ng-src="{{stream}}" autoplay></video>

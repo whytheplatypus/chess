@@ -1,7 +1,13 @@
 'use strict';
 
 angular.module('chessApp')
-  .controller('GameCtrl', ["$scope", "$routeParams", function ($scope, $routeParams) {
+  .controller('GameCtrl', ["$scope", "$routeParams", "$sce", function ($scope, $routeParams, $sce) {
+    navigator.getUserMedia({video: true, audio:true}, function(stream) {
+        console.log("stream", window.URL.createObjectURL(stream));
+        $scope.local_stream = $sce.trustAs($sce.RESOURCE_URL, window.URL.createObjectURL(stream));
+        $scope.$apply();
+    }, function(error){console.log(error)});
+
     console.log($routeParams);
     var channel = false;
     $scope.color = $routeParams.joining=="true"?"b":"w";
@@ -48,6 +54,7 @@ angular.module('chessApp')
             $scope.$apply();
           }
           channel = e.channel;
+          
         };
 
       }
