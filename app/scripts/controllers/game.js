@@ -34,6 +34,10 @@ angular.module('chessApp')
     me.on('peer', function(eventName, peerManager){
       peerManager.pc.ondatachannel = function(e){
         console.log("new data channel");
+        e.channel.onmessage = function(message){
+          var move = JSON.parse(message.data);
+          console.log(move);
+        }
       }
       alert("connection from outside");
       console.log("connected from outside", arguments);
@@ -47,9 +51,13 @@ angular.module('chessApp')
         dc.onopen = function(){
           // me.addDC(dc, peer);
           console.log(dc);
+          dc.onmessage = function(message){
+            var move = JSON.parse(message.data);
+            console.log(move);
+          }
         }
       }
-    }, 1000)
+    }, 1000);
 
 
     $scope.connections = [];
