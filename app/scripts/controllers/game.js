@@ -17,6 +17,7 @@ angular.module('chessApp')
           port: 'PORT'
       };
     var host = 'relay.whytheplatypus.technology'
+    // var host = "localhost"
           ,port = 80;
     var me = new Exchange(id);
     var peerjsServer = 'ws://' + host + ':' + port + '/?id='+me.id;
@@ -35,28 +36,41 @@ angular.module('chessApp')
     me.on('peer', function(eventName, peerManager){
       peerManager.pc.ondatachannel = function(e){
         console.log("new data channel");
-        channel = e.channel;
-        e.channel.onmessage = function(message){
-          var move = JSON.parse(message.data);
-          console.log(move);
-        }
+        e.channel.onopen = function(){
+          alert("connection from outside");
+          console.log("open", arguments);
+          e.channel.onmessage = function(message){
+            console.log(message);
+            var move = JSON.parse(message.data);
+            console.log(move);
+            $scope.chess.move(move);
+            $scope.$apply();
+          }
+          channel = e.channel;
+        };
+
       }
-      alert("connection from outside");
+
       console.log("connected from outside", arguments);
     });
     me.initWS(peerjsServer, protocol);
     setTimeout(function(){
       if($routeParams.joining == "true"){
         console.log("host:", $routeParams.id);
-        var manager = me.connect("763npbkrv")
+        var manager = me.connect($routeParams.id)
         var dc = manager.createDataChannel(manager.peer, {reliable : true, protocol: "draw"});
-        channel = dc;
+
         dc.onopen = function(){
+          console.log("open", arguments);
+          channel = dc;
           // me.addDC(dc, peer);
           console.log(dc);
           dc.onmessage = function(message){
+            console.log(message);
             var move = JSON.parse(message.data);
             console.log(move);
+            $scope.chess.move(move);
+            $scope.$apply();
           }
         }
       }
@@ -86,7 +100,7 @@ angular.module('chessApp')
         var move_json = { from: $scope.square, to: square };
         var move = $scope.chess.move(move_json);
         console.log(move);
-        channel.send(move_json);
+        channel.send(JSON.stringify(move_json));
 
   		}
 
