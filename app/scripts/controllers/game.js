@@ -38,10 +38,8 @@ angular.module('chessApp')
     });
     me.on('peer', function(eventName, peerManager){
       // alert("peer!");
-      console.log("managers", me.managers);
-      console.log(peerManager.peer);
-      console.log("number of managers", _.size(me.managers[peerManager.peer]));
-      if(_.size(me.managers[peerManager.peer])>1){
+      
+      if(peerManager.label == "video"){
         peerManager.pc.onaddstream = function(obj) {
           console.log("test");
           // alert("test");
