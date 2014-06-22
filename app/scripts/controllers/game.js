@@ -2,16 +2,12 @@
 
 angular.module('chessApp')
   .controller('GameCtrl', ["$scope", "$routeParams", "$sce", function ($scope, $routeParams, $sce) {
-    navigator.getUserMedia({video: true, audio:true}, function(stream) {
-        console.log("stream", window.URL.createObjectURL(stream));
-        $scope.local_stream = $sce.trustAs($sce.RESOURCE_URL, window.URL.createObjectURL(stream));
-        $scope.$apply();
-    }, function(error){console.log(error)});
+    var my_video;
 
     console.log($routeParams);
     var channel = false;
     $scope.color = $routeParams.joining=="true"?"b":"w";
-    var id = $routeParams.joining=="true"?$routeParams.id+"_opponent":$routeParams.id
+    var id = $routeParams.joining=="true"?$routeParams.id+"_opponent":$routeParams.id;
     var protocol = {
           to: 'to',
           from: 'from',
@@ -41,48 +37,88 @@ angular.module('chessApp')
       // }
     });
     me.on('peer', function(eventName, peerManager){
-      peerManager.pc.ondatachannel = function(e){
-        console.log("new data channel");
-        e.channel.onopen = function(){
-          alert("connection from outside");
-          console.log("open", arguments);
-          e.channel.onmessage = function(message){
-            console.log(message);
-            var move = JSON.parse(message.data);
-            console.log(move);
-            $scope.chess.move(move);
-            $scope.$apply();
-          }
-          channel = e.channel;
-          
-        };
+      // alert("peer!");
+      console.log("managers", me.managers);
+      console.log(peerManager.peer);
+      console.log("number of managers", _.size(me.managers[peerManager.peer]));
+      if(_.size(me.managers[peerManager.peer])>1){
+        peerManager.pc.onaddstream = function(obj) {
+          console.log("test");
+          // alert("test");
+          console.log(obj);
+          var video = document.createElement("video");
+          document.body.appendChild(video);
+          video.src = window.URL.createObjectURL(obj.stream);
+          video.play();
+        }
+      } else {
+        peerManager.pc.ondatachannel = function(e){
+          console.log("new data channel");
+          e.channel.onopen = function(){
 
+            console.log("open", arguments);
+            e.channel.onmessage = function(message){
+              console.log(message);
+              var move = JSON.parse(message.data);
+              console.log(move);
+              $scope.chess.move(move);
+              $scope.$apply();
+            }
+            channel = e.channel;
+
+          };
+
+        }
       }
-
       console.log("connected from outside", arguments);
     });
     me.initWS(peerjsServer, protocol);
-    setTimeout(function(){
-      if($routeParams.joining == "true"){
-        console.log("host:", $routeParams.id);
-        var manager = me.connect($routeParams.id)
-        var dc = manager.createDataChannel(manager.peer, {reliable : true, protocol: "draw"});
+    if($routeParams.joining == "true"){
+      setTimeout(function(){
+          var game_manager = me.connect($routeParams.id);
+          console.log("host:", $routeParams.id);
+          var dc = game_manager.createDataChannel(game_manager.peer, {reliable : true, protocol: "draw"});
+          dc.onopen = function(){
+            console.log("open", arguments);
+            channel = dc;
+            // me.addDC(dc, manager.peer);
+            console.log(dc);
+            dc.onmessage = function(message){
+              console.log(message);
+              var move = JSON.parse(message.data);
+              console.log(move);
+              $scope.chess.move(move);
+              $scope.$apply();
+            }
 
-        dc.onopen = function(){
-          console.log("open", arguments);
-          channel = dc;
-          // me.addDC(dc, peer);
-          console.log(dc);
-          dc.onmessage = function(message){
-            console.log(message);
-            var move = JSON.parse(message.data);
-            console.log(move);
-            $scope.chess.move(move);
-            $scope.$apply();
+/*
+            navigator.getUserMedia({video: true, audio:true}, function(stream) {
+              // my_video = stream;
+              // console.log("stream", window.URL.createObjectURL(stream));
+              $scope.local_stream = $sce.trustAs($sce.RESOURCE_URL, window.URL.createObjectURL(stream));
+              $scope.$apply();
+              var id = $routeParams.joining=="true"?$routeParams.id:$routeParams.id+"_opponent"
+              // var video_manager = me.connect(id);
+              // video_manager.pc.onaddstream = function(obj) {
+              //   console.log("test");
+              //   var video = document.createElement("video");
+              //   document.body.appendChild(video);
+              //   video.src = window.URL.createObjectURL(obj.stream);
+              //   video.play();
+              // }
+              // video_manager.createVideoChannel(stream);
+              // if(the_manager){
+              //   the_manager.pc.addStream(stream);
+              // }
+              manager.pc.addStream(stream);
+            }, function(error){console.log(error)});
+*/
           }
-        }
-      }
-    }, 1000);
+
+
+
+      }, 1000);
+    }
 
 
     $scope.connections = [];
@@ -114,4 +150,27 @@ angular.module('chessApp')
 
   		$scope.square = square;
   	}
+
+    $scope.startVideoChat = function(){
+      navigator.getUserMedia({video: true, audio:true}, function(stream) {
+        my_video = stream;
+        // console.log("stream", window.URL.createObjectURL(stream));
+        $scope.local_stream = $sce.trustAs($sce.RESOURCE_URL, window.URL.createObjectURL(stream));
+        $scope.$apply();
+        var id = $routeParams.joining=="true"?$routeParams.id:$routeParams.id+"_opponent"
+        var video_manager = me.connect(id, "video");
+        video_manager.pc.onaddstream = function(obj) {
+          console.log("test");
+          var video = document.createElement("video");
+          document.body.appendChild(video);
+          video.src = window.URL.createObjectURL(obj.stream);
+          video.play();
+        }
+        video_manager.createVideoChannel(stream);
+        // if(the_manager){
+        //   the_manager.pc.addStream(stream);
+        // }
+
+      }, function(error){console.log(error)});
+    }
   }]);

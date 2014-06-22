@@ -10,5 +10,6 @@
   {{moves}}
   <span class='piece' ng-bind-html="chess.symbols[chess.turn()]['k']"></span>
 </div>
+<button class="btn btn-primary" ng-click="startVideoChat()">Chat!</button>
 <video muted ng-src="{{local_stream}}" autoplay></video>
 <video ng-src="{{stream}}" autoplay></video>
