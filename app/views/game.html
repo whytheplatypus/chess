@@ -11,10 +11,12 @@
   <span class='piece' ng-bind-html="chess.symbols[chess.turn()]['k']"></span>
 </div>
 <button class="btn btn-primary" ng-click="startVideoChat()">Chat!</button>
+
+
 <video muted ng-src="{{local_stream}}" autoplay></video>
 <video ng-src="{{stream}}" autoplay></video>
 
-<button class="btn btn-primary" data-toggle="modal" data-target="#invite" ng-show="!connection && im_host">Join Game</button>
+<button class="btn btn-primary" data-toggle="modal" data-target="#invite" ng-show="!connection && im_host">Invite a friend</button>
 
 <div class="modal fade" id="invite">
   <div class="modal-dialog">
@@ -26,7 +28,7 @@
       <div class="modal-body">
         <form role="form">
           <input class="form-control" type="text" ng-model="email"/>
-          <a href="mailto:{{email}}?subject={{invite_subject}}&body={{invite_body}}" class="btn btn-primary">Join</a>
+          <a target="_blank" href="mailto:{{email}}?subject={{invite_subject}}&body={{invite_body}}" class="btn btn-primary">Join</a>
         </form>
       </div>
       <div class="modal-footer">

@@ -3,7 +3,7 @@
 angular.module('chessApp')
   .controller('GameCtrl', ["$scope", "$routeParams", "$sce", function ($scope, $routeParams, $sce) {
     var my_video;
-    var im_host = $routeParams.joining=="true";
+    var im_host = $routeParams.joining!="true";
     if(im_host){
       $scope.link = window.location.href+"?joining=true";
       $scope.invite_subject = window.encodeURI("Come play chess with me");
@@ -52,10 +52,14 @@ angular.module('chessApp')
           console.log("test");
           // alert("test");
           console.log(obj);
-          var video = document.createElement("video");
-          document.body.appendChild(video);
-          video.src = window.URL.createObjectURL(obj.stream);
-          video.play();
+          // var video = document.createElement("video");
+          // document.body.appendChild(video);
+          // video.src = window.URL.createObjectURL(obj.stream);
+          // video.play();
+
+          $scope.stream = $sce.trustAs($sce.RESOURCE_URL, window.URL.createObjectURL(obj.stream));
+          $scope.$apply();
+          peerManager.pc.addStream(my_video);
         }
       } else {
         peerManager.pc.ondatachannel = function(e){
@@ -157,26 +161,24 @@ angular.module('chessApp')
   		$scope.square = square;
   	}
 
-    $scope.startVideoChat = function(){
-      navigator.getUserMedia({video: true, audio:true}, function(stream) {
-        my_video = stream;
-        // console.log("stream", window.URL.createObjectURL(stream));
-        $scope.local_stream = $sce.trustAs($sce.RESOURCE_URL, window.URL.createObjectURL(stream));
-        $scope.$apply();
-        var id = $routeParams.joining=="true"?$routeParams.id:$routeParams.id+"_opponent"
-        var video_manager = me.connect(id, "video");
-        video_manager.pc.onaddstream = function(obj) {
-          console.log("test");
-          var video = document.createElement("video");
-          document.body.appendChild(video);
-          video.src = window.URL.createObjectURL(obj.stream);
-          video.play();
-        }
-        video_manager.createVideoChannel(stream);
-        // if(the_manager){
-        //   the_manager.pc.addStream(stream);
-        // }
+    navigator.getUserMedia({video: true, audio:true}, function(stream) {
+      my_video = stream;
+      $scope.local_stream = $sce.trustAs($sce.RESOURCE_URL, window.URL.createObjectURL(stream));
+      $scope.$apply();
+    }, console.log);
 
-      }, function(error){console.log(error)});
+    $scope.startVideoChat = function(){
+      var id = $routeParams.joining=="true"?$routeParams.id:$routeParams.id+"_opponent"
+      var video_manager = me.connect(id, "video");
+      video_manager.createVideoChannel(my_video);
+      video_manager.pc.onaddstream = function(obj) {
+        console.log("got a stream back");
+        // var video = document.createElement("video");
+        // document.body.appendChild(video);
+        // video.src = window.URL.createObjectURL(obj.stream);
+        // video.play();
+        $scope.stream = $sce.trustAs($sce.RESOURCE_URL, window.URL.createObjectURL(obj.stream));
+        $scope.$apply();
+      }
     }
   }]);
