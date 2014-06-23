@@ -3,6 +3,14 @@
 angular.module('chessApp')
   .controller('GameCtrl', ["$scope", "$routeParams", "$sce", function ($scope, $routeParams, $sce) {
     var my_video;
+    var im_host = $routeParams.joining=="true";
+    if(im_host){
+      $scope.link = window.location.href+"?joining=true";
+      $scope.invite_subject = window.encodeURI("Come play chess with me");
+      $scope.invite_body = $scope.link;
+    }
+    $scope.im_host = im_host;
+
 
     console.log($routeParams);
     var channel = false;
@@ -38,7 +46,7 @@ angular.module('chessApp')
     });
     me.on('peer', function(eventName, peerManager){
       // alert("peer!");
-      
+
       if(peerManager.label == "video"){
         peerManager.pc.onaddstream = function(obj) {
           console.log("test");
