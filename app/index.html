@@ -27,13 +27,18 @@
     <script src="bower_components/exchangejs/exchange.js"></script>
     <script src="bower_components/exchangejs/md5.js"></script>
     <script src="bower_components/platform/platform.js"></script>
-    <link rel="import" href="components/paper-input/paper-input.html">
-    <link rel="import" href="components/paper-toast/paper-toast.html">
-    <link rel="import" href="components/paper-dialog/paper-dialog.html">
-    <link rel="import" href="components/paper-button/paper-button.html">
+    <link rel="import" href="bower_components/paper-input/paper-input.html">
+    <link rel="import" href="bower_components/paper-toast/paper-toast.html">
+    <link rel="import" href="bower_components/paper-dialog/paper-dialog.html">
+    <link rel="import" href="bower_components/paper-dialog/paper-dialog-transition.html">
+    <link rel="import" href="bower_components/paper-button/paper-button.html">
+    <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+    <link href="bower_components/core-icons/core-icons.html" rel="import">
+
 
   </head>
   <body ng-app="chessApp">
+
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -62,8 +67,7 @@
     <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
 
-    <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
+
     <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
@@ -74,9 +78,7 @@
     <script src="bower_components/angular-mocks/angular-mocks.js"></script>
     <script src="bower_components/angularfire/angularfire.js"></script>
     <script src="bower_components/angularfire/angularfire.min.js"></script>
-    <script src="bower_components/exchangejs/exchange.min.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
+
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>

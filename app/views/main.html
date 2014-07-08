@@ -1,6 +1,20 @@
 
-<a href="#/play/{{uniq}}" class="btn btn-primary">New Game</a>
-<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Join Game</button>
+<a href="#/play/{{uniq}}">
+<paper-button label="&#9817;" id="enter"></paper-button>
+</a>
+
+<paper-dialog heading="Dialog" transition="paper-dialog-transition-center" id="start_modal">
+
+
+
+    <paper-button label="New Game" affirmative></paper-button>
+    <paper-button label="Join Game" affirmative></paper-button>
+    <!-- <paper-button label="Accept" affirmative default></paper-button> -->
+
+</paper-dialog>
+
+<!-- <a href="#/play/{{uniq}}" class="btn btn-primary">New Game</a>
+<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Join Game</button> -->
 
 <div class="modal fade" id="myModal">
   <div class="modal-dialog">
@@ -16,6 +30,8 @@
         </form>
       </div>
       <div class="modal-footer">
+
+
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button>
       </div>
