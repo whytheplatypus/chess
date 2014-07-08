@@ -43,6 +43,10 @@ x-user-list{
   transform: rotate(180deg);
 }
 
+#invite{
+  margin:0 50%;
+}
+
 /*#chessboard.b{
   -webkit-transform-origin: 200px 200px;
   -webkit-transform: rotate(180deg);

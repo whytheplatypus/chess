@@ -1,4 +1,6 @@
-<div id="chessboard">
+<paper-fab icon="social:person-add" id="invite" data-toggle="modal" data-target="#invite_modal"></paper-fab>
+
+<div id="chessboard" ng-show="connection">
   <div class="pull-left {{color}}">
      <div class="column pull-left" ng-repeat="(key, column) in board" ng-model="column">
           <div ng-repeat="row in column" ng-click="selectPiece(key+row)" ng-model="row" class="{{chess.get(key+row).color}} text-center {{_.contains(moves, key+row)?'valid':'invalid'}} square {{chess.square_color(key+row)}}" data-square="{{key+row}}">
@@ -16,9 +18,11 @@
 <video muted ng-src="{{local_stream}}" autoplay></video>
 <video ng-src="{{stream}}" autoplay></video>
 
-<button class="btn btn-primary" data-toggle="modal" data-target="#invite" ng-show="!connection && im_host">Invite a friend</button>
 
-<div class="modal fade" id="invite">
+
+<!-- <button class="btn btn-primary" data-toggle="modal" data-target="#invite" ng-show="!connection && im_host">Invite a friend</button> -->
+
+<div class="modal fade" id="invite_modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
