@@ -30,10 +30,11 @@
         <h4 class="modal-title">Invite a friend</h4>
       </div>
       <div class="modal-body">
-        <form role="form">
-          <input class="form-control" type="text" ng-model="email"/>
-          <a target="_blank" href="mailto:{{email}}?subject={{invite_subject}}&body={{invite_body}}" class="btn btn-primary">Join</a>
-        </form>
+        <paper-input label="Email a friend" ng-model="email" floatingLabel="true"></paper-input>
+        <a target="_blank" href="mailto:{{email}}?subject={{invite_subject}}&body={{invite_body}}">
+          <paper-button label="Send Invite"></paper-button>
+        </a>
+        or send them this link: {{invite_body}}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
