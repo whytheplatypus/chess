@@ -1,6 +1,6 @@
 <paper-fab icon="social:person-add" id="invite" data-toggle="modal" data-target="#invite_modal"></paper-fab>
-
-<div id="chessboard" ng-show="connection">
+<button ng-click="startVideoChat()">chat</button>
+<div id="chessboard" ng-show="channel">
   <div class="pull-left {{color}}">
      <div class="column pull-left" ng-repeat="(key, column) in board" ng-model="column">
           <div ng-repeat="row in column" ng-click="selectPiece(key+row)" ng-model="row" class="{{chess.get(key+row).color}} text-center {{_.contains(moves, key+row)?'valid':'invalid'}} square {{chess.square_color(key+row)}}" data-square="{{key+row}}">
@@ -12,11 +12,10 @@
   {{moves}}
   <span class='piece' ng-bind-html="chess.symbols[chess.turn()]['k']"></span>
 </div>
-<button class="btn btn-primary" ng-click="startVideoChat()">Chat!</button>
 
 
 <video muted ng-src="{{local_stream}}" autoplay></video>
-<video ng-src="{{stream}}" autoplay></video>
+<video muted ng-src="{{stream}}" autoplay></video>
 
 
 
