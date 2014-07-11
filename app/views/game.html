@@ -1,4 +1,4 @@
-<paper-fab icon="social:person-add" id="invite" data-toggle="modal" data-target="#invite_modal" ng-hide="channel"></paper-fab>
+<paper-fab icon="social:person-add" id="invite" ng-click="invite()" ng-hide="channel"></paper-fab>
 <paper-fab raisedButton=false class="center" icon="communication:hangout-video" ng-show="channel && !local_stream" ng-click="startVideoChat()"></paper-fab>
 <video class="center" muted ng-src="{{stream}}" autoplay height="256px" ng-show="stream"></video>
 <div id="chessboard" ng-show="channel">
@@ -9,39 +9,20 @@
                </span>
           </div>
      </div>
-  <span class='piece' ng-bind-html="chess.symbols[chess.turn()]['k']"></span>
+     <span class='piece {{color}}' ng-bind-html="chess.symbols[chess.turn()]['k']"></span>
   </div>
   {{moves}}
-
 </div>
 
+<paper-dialog heading="Invite" transition="paper-dialog-transition-center" id="invite_modal">
+  <p>Send this link: <span>{{invite_body}}</span></p>
+  <p>OR</p>
+  <paper-input label="Email a friend" ng-model="email" floatingLabel="true"></paper-input>
+  <a target="_blank" href="mailto:{{email}}?subject={{invite_subject}}&body={{invite_body}}">
+    <paper-button label="Send Invite"></paper-button>
+  </a>
+  <!-- <paper-button label="More Info..." dismissive></paper-button>
+  <paper-button label="Decline" affirmative></paper-button>
+  <paper-button label="Accept" affirmative autofocus></paper-button> -->
 
-
-<!-- <video muted ng-src="{{local_stream}}" autoplay></video> -->
-
-
-
-
-<!-- <button class="btn btn-primary" data-toggle="modal" data-target="#invite" ng-show="!connection && im_host">Invite a friend</button> -->
-
-<div class="modal fade" id="invite_modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Invite a friend</h4>
-      </div>
-      <div class="modal-body">
-        <paper-input label="Email a friend" ng-model="email" floatingLabel="true"></paper-input>
-        <a target="_blank" href="mailto:{{email}}?subject={{invite_subject}}&body={{invite_body}}">
-          <paper-button label="Send Invite"></paper-button>
-        </a>
-        or send them this link: {{invite_body}}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</paper-dialog>
