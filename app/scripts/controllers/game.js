@@ -2,20 +2,7 @@
 
 angular.module('chessApp')
   .controller('GameCtrl', ["$scope", "$routeParams", "$sce", function ($scope, $routeParams, $sce) {
-    var my_video;
-    var camera = navigator.requestCamera({video: true, audio:true})
-    .then(function(stream){
-      $scope.local_stream = $sce.trustAs($sce.RESOURCE_URL, window.URL.createObjectURL(stream));
-      $scope.$apply();
-      my_video = stream;
 
-
-
-      return stream;
-    })
-    .catch(function(error) {
-      console.log("Failed!", error);
-    });
 
 
     var im_host = $routeParams.joining!="true";
@@ -43,15 +30,14 @@ angular.module('chessApp')
     // var host = "localhost"
           ,port = 80;
     var me = new Exchange(id);
+
     me.on('peer', function(eventName, peerManager){
       console.log("peer!");
 
-      if(peerManager.label == "video"){
-        console.log(peerManager.pc);
+      if(peerManager.label != "base"){
         peerManager.pc.onaddstream = function(obj) {
           $scope.stream = $sce.trustAs($sce.RESOURCE_URL, window.URL.createObjectURL(obj.stream));
           $scope.$apply();
-          obj.target.addStream(my_video);
         }
       } else {
         peerManager.pc.ondatachannel = function(e){
@@ -143,18 +129,16 @@ angular.module('chessApp')
 
     $scope.startVideoChat = function(){
       var id = $routeParams.joining=="true"?$routeParams.id:$routeParams.id+"_opponent"
-      var video_manager = me.connect(id, "video");
-
-      console.log(video_manager);
-      video_manager.pc.onaddstream = function(obj) {
-        console.log("got a stream back");
-        $scope.stream = $sce.trustAs($sce.RESOURCE_URL, window.URL.createObjectURL(obj.stream));
-        $scope.$apply();
-      }
-      // navigator.getUserMedia({video: true, audio:true}, function(stream) {
-      camera.then(function(stream){
+      var video_manager = me.connect(id, id+"video");
+      navigator.requestCamera({video: true, audio:true})
+      .then(function(stream){
+        $scope.local_stream = stream;
         video_manager.createVideoChannel(stream);
+        $scope.$apply();
         return stream;
+      })
+      .catch(function(error) {
+        console.log("Failed!", error);
       });
     }
 

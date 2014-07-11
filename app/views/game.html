@@ -1,5 +1,5 @@
 <paper-fab icon="social:person-add" id="invite" data-toggle="modal" data-target="#invite_modal" ng-hide="channel"></paper-fab>
-<paper-fab class="center" icon="communication:hangout-video" ng-show="channel && !stream" ng-click="startVideoChat()"></paper-fab>
+<paper-fab raisedButton=false class="center" icon="communication:hangout-video" ng-show="channel && !local_stream" ng-click="startVideoChat()"></paper-fab>
 <video class="center" muted ng-src="{{stream}}" autoplay height="256px" ng-show="stream"></video>
 <div id="chessboard" ng-show="channel">
   <div class="center board {{color}}">
