@@ -47,20 +47,11 @@ angular.module('chessApp')
       console.log("peer!");
 
       if(peerManager.label == "video"){
+        console.log(peerManager.pc);
         peerManager.pc.onaddstream = function(obj) {
-          console.log("test");
-          // alert("test");
-          console.log(obj);
-          // var video = document.createElement("video");
-          // document.body.appendChild(video);
-          // video.src = window.URL.createObjectURL(obj.stream);
-          // video.play();
-
-
           $scope.stream = $sce.trustAs($sce.RESOURCE_URL, window.URL.createObjectURL(obj.stream));
           $scope.$apply();
-          obj.target.addStream(my_video)
-          //
+          obj.target.addStream(my_video);
         }
       } else {
         peerManager.pc.ondatachannel = function(e){
