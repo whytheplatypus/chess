@@ -1,6 +1,6 @@
 <paper-fab icon="social:person-add" id="invite" ng-click="invite()" ng-hide="channel"></paper-fab>
 <paper-fab raisedButton=false class="center" icon="communication:hangout-video" ng-show="channel && !local_stream" ng-click="startVideoChat()"></paper-fab>
-<video class="center" muted ng-src="{{stream}}" autoplay height="256px" ng-show="stream"></video>
+<video class="center" ng-src="{{stream}}" autoplay height="256px" ng-show="stream"></video>
 <div id="chessboard" ng-show="channel">
   <div class="center board {{color}}">
      <div class="column pull-left" ng-repeat="(key, column) in board" ng-model="column">
