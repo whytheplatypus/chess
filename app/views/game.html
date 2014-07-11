@@ -1,5 +1,5 @@
 <paper-fab icon="social:person-add" id="invite" data-toggle="modal" data-target="#invite_modal" ng-hide="channel"></paper-fab>
-
+<paper-fab icon="communication:hangout-video" ng-show="channel"></paper-fab>
 <div id="chessboard" ng-show="channel">
   <div class="center {{color}}">
      <div class="column pull-left" ng-repeat="(key, column) in board" ng-model="column">
