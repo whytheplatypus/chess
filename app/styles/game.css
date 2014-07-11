@@ -37,6 +37,13 @@ x-user-list{
 	border-color: rgba(0,0,255,0.5);
   border-style: solid;
 }
+
+.center{
+  margin: auto;
+  height: 400px;
+  width: 414px;
+}
+
 /**/
 .b {
   -webkit-transform: rotate(180deg);
