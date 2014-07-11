@@ -39,6 +39,7 @@ angular.module('chessApp')
               $scope.chess.move(move);
               $scope.$apply();
             }
+            document.getElementById('invite_modal').opened = false;
             $scope.channel = e.channel;
             $scope.$apply();
           };
@@ -70,6 +71,7 @@ angular.module('chessApp')
       dc.onopen = function(){
         $scope.channel = dc;
         $scope.$apply();
+        document.getElementById('invite_modal').opened = false;
         dc.onmessage = function(message){
           var move = JSON.parse(message.data);
           $scope.chess.move(move);
