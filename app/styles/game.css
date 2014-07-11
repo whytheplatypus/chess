@@ -40,6 +40,10 @@ x-user-list{
 
 .center{
   margin: auto;
+  display: block;
+}
+
+.board{
   height: 400px;
   width: 414px;
 }
