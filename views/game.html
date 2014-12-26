@@ -1,7 +1,7 @@
 <!-- <paper-fab icon="social:person-add" id="invite" ng-click="invite()" ng-hide="channel"></paper-fab>
 <paper-fab raisedButton=false class="center" icon="communication:hangout-video" ng-show="channel && !local_stream" ng-click="startVideoChat()"></paper-fab>
 <video class="center" ng-src="{{stream}}" autoplay height="256px" ng-show="stream"></video> -->
-<board style="display:block; width: 100%;" game="game" on-move="onMove" ng-show="channel"></board>
+<board style="display:block; width: 100%;" game="game" on-move="onMove" ng-show="channel" side="side"></board>
 
 <paper-dialog autoCloseDisabled=true opened={{!channel}} heading="Invite" transition="paper-dialog-transition-center" id="invite_modal">
   <p>Send this link: <input type="text" disabled value="{{invite_link}}"></p>

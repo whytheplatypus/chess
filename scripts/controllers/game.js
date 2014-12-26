@@ -6,6 +6,7 @@ angular.module('chessApp')
     $scope.onMove = function(move){
       $scope.channel.send(JSON.stringify(move));
     };
+    $scope.side = $routeParams.color
     $scope.invite_link = window.location.href.replace('white', 'black');
 //     var im_host = $routeParams.joining != "true";
 //     $scope.im_host = im_host;

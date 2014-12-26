@@ -26,7 +26,9 @@ angular.module('chessApp')
       // or if it's not that side's turn
       if (game.game_over() === true ||
         (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-        (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+        (game.turn() === 'b' && piece.search(/^w/) !== -1) ||
+        (scope.side === 'white' && piece.search(/^b/) !== -1) ||
+        (scope.side === 'black' && piece.search(/^w/) !== -1)) {
           return false;
         }
       };
@@ -96,7 +98,8 @@ angular.module('chessApp')
     link: link,
     scope: {
       'game': "=",
-      'onMove': '='
+      'onMove': '=',
+      'side': '='
     },
   };
 }]);
