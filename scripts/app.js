@@ -12,7 +12,7 @@ angular.module('chessApp', [
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/play/:id', {
+      .when('/play/:color/:id', {
         templateUrl: 'views/game.html',
         controller: 'GameCtrl'
       })

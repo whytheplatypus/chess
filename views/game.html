@@ -1,28 +1,13 @@
-<paper-fab icon="social:person-add" id="invite" ng-click="invite()" ng-hide="channel"></paper-fab>
+<!-- <paper-fab icon="social:person-add" id="invite" ng-click="invite()" ng-hide="channel"></paper-fab>
 <paper-fab raisedButton=false class="center" icon="communication:hangout-video" ng-show="channel && !local_stream" ng-click="startVideoChat()"></paper-fab>
-<video class="center" ng-src="{{stream}}" autoplay height="256px" ng-show="stream"></video>
-<div id="chessboard" ng-show="channel">
-  <div class="center board {{color}}">
-     <div class="column pull-left" ng-repeat="(key, column) in board" ng-model="column">
-          <div ng-repeat="row in column" ng-click="selectPiece(key+row)" ng-model="row" class="{{chess.get(key+row).color}} text-center {{_.contains(moves, key+row)?'valid':'invalid'}} square {{chess.square_color(key+row)}}" data-square="{{key+row}}">
-               <span class='piece' data-color="{{chess.get(key+row).color}}" data-type="{{chess.get(key+row).color}}" ng-bind-html="chess.symbols[chess.get(key+row).color][chess.get(key+row).type]">
-               </span>
-          </div>
-     </div>
-     <span class='piece {{color}}' ng-bind-html="chess.symbols[chess.turn()]['k']"></span>
-  </div>
-  {{moves}}
-</div>
+<video class="center" ng-src="{{stream}}" autoplay height="256px" ng-show="stream"></video> -->
+<board style="display:block; width: 100%;" game="game" on-move="onMove" ng-show="channel"></board>
 
-<paper-dialog opened=true heading="Invite" transition="paper-dialog-transition-center" id="invite_modal">
-  <p>Send this link: <span>{{invite_body}}</span></p>
+<paper-dialog autoCloseDisabled=true opened={{!channel}} heading="Invite" transition="paper-dialog-transition-center" id="invite_modal">
+  <p>Send this link: <input type="text" disabled value="{{invite_link}}"></p>
   <p>OR</p>
   <paper-input label="Email a friend" ng-model="email" floatingLabel="true"></paper-input>
-  <a target="_blank" href="mailto:{{email}}?subject={{invite_subject}}&body={{invite_body}}">
+  <a target="_blank" href="mailto:{{email}}?subject='Play chess!'&body={{invite_link}}">
     <paper-button label="Send Invite"></paper-button>
   </a>
-  <!-- <paper-button label="More Info..." dismissive></paper-button>
-  <paper-button label="Decline" affirmative></paper-button>
-  <paper-button label="Accept" affirmative autofocus></paper-button> -->
-
 </paper-dialog>
