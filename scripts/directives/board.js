@@ -89,7 +89,7 @@ angular.module('chessApp')
         onMouseoutSquare: onMouseoutSquare,
         onMouseoverSquare: onMouseoverSquare,
         onSnapEnd: onSnapEnd,
-        pieceTheme: '/chess/bower_components/chessboardjs/img/chesspieces/wikipedia/{piece}.png'
+        pieceTheme: 'bower_components/chessboardjs/img/chesspieces/wikipedia/{piece}.png'
       };
       board = new ChessBoard(element, cfg);
   }
