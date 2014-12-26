@@ -1,0 +1,13 @@
+{
+  "name": "chessboardjs",
+  "homepage": "https://github.com/oakmac/chessboardjs",
+  "_release": "748223661b",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "748223661b9e3d66921ef646c5b8cbc6b53fc715"
+  },
+  "_source": "git://github.com/oakmac/chessboardjs.git",
+  "_target": "*",
+  "_originalSource": "oakmac/chessboardjs"
+}

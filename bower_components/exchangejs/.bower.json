@@ -1,0 +1,30 @@
+{
+  "name": "exchange.js",
+  "main": "exchange.min.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "mocha": "~1.12.1",
+    "expect": "~0.2.0",
+    "jquery": "~2.0.3"
+  },
+  "dependencies": {
+    "js-bson": "git://github.com/mongodb/js-bson.git"
+  },
+  "homepage": "https://github.com/whytheplatypus/exchange.js",
+  "_release": "a1e94c495a",
+  "_resolution": {
+    "type": "branch",
+    "branch": "dev",
+    "commit": "a1e94c495a072b71b1dffe82792cf89a08a632ca"
+  },
+  "_source": "git://github.com/whytheplatypus/exchange.js.git",
+  "_target": "dev",
+  "_originalSource": "whytheplatypus/exchange.js"
+}

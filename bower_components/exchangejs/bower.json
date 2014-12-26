@@ -1,0 +1,21 @@
+{
+  "name": "exchange.js",
+  "version": "0.0.1",
+  "main": "exchange.min.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "mocha": "~1.12.1",
+    "expect": "~0.2.0",
+    "jquery": "~2.0.3"
+  },
+  "dependencies": {
+    "js-bson": "git://github.com/mongodb/js-bson.git"
+  }
+}
