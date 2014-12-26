@@ -81,6 +81,7 @@ angular.module('chessApp')
       }, 1000)
 
       var cfg = {
+        orientation: scope.side,
         draggable: true,
         position: 'start',
         onDragStart: onDragStart,

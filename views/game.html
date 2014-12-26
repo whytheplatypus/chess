@@ -3,11 +3,13 @@
 <video class="center" ng-src="{{stream}}" autoplay height="256px" ng-show="stream"></video> -->
 <board style="display:block; width: 100%;" game="game" on-move="onMove" ng-show="channel" side="side"></board>
 
-<paper-dialog autoCloseDisabled=true opened={{!channel}} heading="Invite" transition="paper-dialog-transition-center" id="invite_modal">
-  <p>Send this link: <input type="text" disabled value="{{invite_link}}"></p>
-  <p>OR</p>
-  <paper-input label="Email a friend" ng-model="email" floatingLabel="true"></paper-input>
-  <a target="_blank" href="mailto:{{email}}?subject='Play chess!'&body={{invite_link}}">
-    <paper-button label="Send Invite"></paper-button>
-  </a>
+<paper-dialog autoCloseDisabled=true opened={{!channel}} heading="{{side=='white'?'Invite':'Connecting...'}}" transition="paper-dialog-transition-center" id="invite_modal">
+  <div ng-show="side=='white'">
+    <p>Send this link: <input type="text" disabled value="{{invite_link}}"></p>
+    <p>OR</p>
+    <paper-input label="Email a friend" ng-model="email" floatingLabel="true"></paper-input>
+    <a target="_blank" href="mailto:{{email}}?subject='Play chess!'&body={{invite_link}}">
+      <paper-button label="Send Invite"></paper-button>
+    </a>
+  </div>
 </paper-dialog>
