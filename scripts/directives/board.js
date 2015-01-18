@@ -22,6 +22,8 @@ angular.module('chessApp')
     };
 
     var onDragStart = function(source, piece) {
+      //grey squares for mobile
+      onMouseoverSquare();
       // do not pick up pieces if the game is over
       // or if it's not that side's turn
       if (game.game_over() === true ||
