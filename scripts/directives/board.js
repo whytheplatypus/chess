@@ -7,12 +7,12 @@ angular.module('chessApp')
     var game = scope.game;
 
     var removeGreySquares = function() {
-      $('#board .square-55d63').css('background', '');
+      $('.square-55d63').css('background', '');
     };
 
     var greySquare = function(square) {
-      var squareEl = $('#board .square-' + square);
-
+      var squareEl = $('.square-' + square);
+      console.log(squareEl);
       var background = '#a9a9a9';
       if (squareEl.hasClass('black-3c85d') === true) {
         background = '#696969';
@@ -22,6 +22,8 @@ angular.module('chessApp')
     };
 
     var onDragStart = function(source, piece) {
+      //grey squares for mobile
+      onMouseoverSquare();
       // do not pick up pieces if the game is over
       // or if it's not that side's turn
       if (game.game_over() === true ||
@@ -60,7 +62,7 @@ angular.module('chessApp')
 
         // highlight the square they moused over
         greySquare(square);
-
+        console.log(square);
         // highlight the possible squares for this piece
         for (var i = 0; i < moves.length; i++) {
           greySquare(moves[i].to);
