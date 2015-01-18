@@ -5,10 +5,10 @@ angular.module('chessApp')
     $scope.game = new Chess();
 
     var game_check = function(){
-      if($scope.game.in_check()){
-        document.querySelector('#check').show();
-      } else if($scope.game.game_over()){
+      if($scope.game.game_over()){
         document.querySelector('#game_over').show();
+      } else if($scope.game.in_check()){
+        document.querySelector('#check').show();
       }
     }
 
@@ -57,7 +57,7 @@ angular.module('chessApp')
             var move = JSON.parse(message.data);
             console.log(move);
             $scope.game.move(move);
-
+            game_check();
             if(!$scope.$$phase){
               $scope.$apply();
             }
